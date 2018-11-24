@@ -5,14 +5,19 @@ from rest_framework import status
 import json
 
 class ContextQuestionAnswering(APIView):
-    def squad(self, text, question):
-        # TODO: реализация ContextQuestionAnswering
+    language = 'russian'
 
-        answer = 'Text: ' + text + '. Question: ' + question + '. Answer: AAAAAAAAAA'
+    def squad(self, text, question):
+        if self.language == 'russian':
+            # TODO: реализация ContextQuestionAnswering для russian
+            answer = 'Текст: ' + text + '. Вопрос: ' + question + '. Ответ: ЮЮЮЮЮЮЮ'
+        else:
+            # TODO: реализация ContextQuestionAnswering для english
+            answer = 'Text: ' + text + '. Question: ' + question + '. Answer: LLLLLLLLLL'
 
         return answer
 
-    def squad_get_answer(self, context):
+    def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
         text = context['text']
         question = context['question']
@@ -21,6 +26,36 @@ class ContextQuestionAnswering(APIView):
         return '{answer: ' + result + '}'
 
     def post(self, request):
-        result = self.squad_get_answer(request.body)
+        # self.language = распознать язык
+    
+        result = self.get_answer(request.body)
+
+        return Response(result)
+
+
+class AutomaticSpellingCorrection(APIView):
+    language = 'russian'
+
+    def correct(self, text):
+        if self.language == 'russian':
+            # TODO: реализация AutomaticSpellingCorrection для russian
+            corrected_text = 'Исправленный текст: ' + text
+        else:
+            # TODO: реализация AutomaticSpellingCorrection для english
+            corrected_text = 'Corrected text: ' + text
+
+        return corrected_text
+
+    def get_answer(self, context):
+        context = json.loads(context.decode('utf-8'))
+        text = context['text']
+        result = self.correct(text)
+
+        return '{answer: ' + result + '}'
+
+    def post(self, request):
+        # self.language = распознать язык
+
+        result = self.get_answer(request.body)
 
         return Response(result)
