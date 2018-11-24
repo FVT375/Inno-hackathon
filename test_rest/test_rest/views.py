@@ -1,19 +1,26 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from test_rest.serializers import UserSerializer, GroupSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import json
 
+class ContextQuestionAnswering(APIView):
+    def squad(self, text, question):
+        # TODO: реализация ContextQuestionAnswering
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+        answer = 'Text: ' + text + '. Question: ' + question + '. Answer: AAAAAAAAAA'
 
+        return answer
 
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    def squad_get_answer(self, context):
+        context = json.loads(context.decode('utf-8'))
+        text = context['text']
+        question = context['question']
+        result = self.squad(text, question)
+
+        return '{answer: ' + result + '}'
+
+    def post(self, request):
+        result = self.squad_get_answer(request.body)
+
+        return Response(result)
