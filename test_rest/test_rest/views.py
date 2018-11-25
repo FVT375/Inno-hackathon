@@ -111,6 +111,12 @@ class SynonymSearch(APIView):
                     for query_word in query_synonyms:
                         if w.lemma() in query_synonyms[query_word]:
                             synonyms.append(w.lemma())
+            if self.language == 'en':
+                for synset in wordnet.synsets(word):
+                    for w in synset.lemmas():
+                        for query_word in query_synonyms:
+                            if w.name() in query_synonyms[query_word]:
+                                synonyms.append(w.name())
             result[word] = synonyms
             
         # found = []
