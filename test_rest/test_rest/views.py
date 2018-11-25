@@ -27,6 +27,9 @@ class ContextQuestionAnswering(APIView):
         t = squad_.do(self.language, text, question)
         if t != 'error':
             result['answer'] = t
+        print("####")
+        print(result)
+        print("####")
         return json.dumps(result)
 
     def get_answer(self, context):
