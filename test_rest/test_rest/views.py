@@ -30,7 +30,7 @@ class ContextQuestionAnswering(APIView):
         print("####")
         print(result)
         print("####")
-        return json.dumps(result)
+        return json.dumps(result, ensure_ascii=False)
 
     def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
@@ -58,7 +58,7 @@ class AutomaticSpellingCorrection(APIView):
             if corr_word != 'error' and corr_word != word:
                 result.append(corr_word)
 
-        return json.dumps(result)
+        return json.dumps(result, ensure_ascii=False)
 
     def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
@@ -154,7 +154,7 @@ class SynonymSearch(APIView):
 
         #     if possible_words:
         #         result['result'] = possible_words
-        return json.dumps(result)
+        return json.dumps(result, ensure_ascii=False)
 
     def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
