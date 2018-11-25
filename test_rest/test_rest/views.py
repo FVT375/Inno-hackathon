@@ -27,7 +27,7 @@ class ContextQuestionAnswering(APIView):
         t = squad_.do(self.language, text, question)
         if t != 'error':
             result['answer'] = t
-        return json.dumps(result, ensure_ascii=False)
+        return json.dumps(result)
 
     def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
@@ -55,7 +55,7 @@ class AutomaticSpellingCorrection(APIView):
             if corr_word != word:
                 result[word] = corr_word
 
-        return json.dumps(result, ensure_ascii=False)
+        return json.dumps(result)
 
     def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
@@ -67,7 +67,7 @@ class AutomaticSpellingCorrection(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return JsonResponse(result, safe=False)
+        return JsonResponse(result)
 
 
 class SynonymSearch(APIView):
@@ -124,7 +124,7 @@ class SynonymSearch(APIView):
 
             if possible_words:
                 result['result'] = possible_words
-        return json.dumps(result, ensure_ascii=False)
+        return json.dumps(result)
 
     def get_answer(self, context):
         context = json.loads(context.decode('utf-8'))
@@ -138,4 +138,4 @@ class SynonymSearch(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return JsonResponse(result, safe=False)
+        return JsonResponse(result)
