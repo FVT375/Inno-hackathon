@@ -22,7 +22,7 @@ class SpellingCorrector():
             return self.model_ru([text])[0]
         
         #error
-        return (language, text)
+        return ('error')
 
 def init_models():
     a = Squad()

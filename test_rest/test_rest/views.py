@@ -55,7 +55,7 @@ class AutomaticSpellingCorrection(APIView):
         words = text.split(' ')
         for word in words:
             corr_word = spelling_corrector.do(self.language, word)
-            if corr_word != word:
+            if corr_word != 'error' and corr_word != word:
                 result[word] = corr_word
 
         return json.dumps(result)
@@ -98,7 +98,9 @@ class SynonymSearch(APIView):
                         if(w.name() not in synonyms):
                             synonyms.append(w.name())
                 query_synonyms[word] = synonyms
-        
+        print("### query_synonyms")
+        print(query_synonyms)
+        print("###")
         result = {}
         text_words = text.split(' ')
         for word in text_words:
@@ -106,19 +108,25 @@ class SynonymSearch(APIView):
             if self.language == 'ru':
                 if len (self.wikiwordnet.get_synsets(word)) > 0:
                     synset = self.wikiwordnet.get_synsets(word)[0]
-                else: break
+                else: continue
                 for w in synset.get_words():
                     for query_word in query_synonyms:
                         if w.lemma() in query_synonyms[query_word]:
                             synonyms.append(w.lemma())
+            print("### synonyms ru")
+            print(synonyms)
+            print("###")
             if self.language == 'en':
                 for synset in wordnet.synsets(word):
                     for w in synset.lemmas():
                         for query_word in query_synonyms:
-                            if w.name() in query_synonyms[query_word]:
+                            if w.name() in query_synonyms[query_word] and w.name() not in synonyms:
                                 synonyms.append(w.name())
+            print("### synonyms en")
+            print(synonyms)
+            print("###")
             result[word] = synonyms
-            
+        
         # found = []
         # index = 0
         # for word in text_words:
