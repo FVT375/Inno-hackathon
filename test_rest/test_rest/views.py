@@ -89,12 +89,12 @@ class SynonymSearch(APIView):
             if self.language == 'ru':
                 if len (wikiwordnet.get_synsets(word)) > 0:
                     synset = wikiwordnet.get_synsets(word)[0]
-                else: break
+                else: continue
                 synonyms = []
                 for w in synset.get_words():
                     synonyms.append(w.lemma())
                 t = mystem.lemmatize(word)
-                print(t)
+                print(t[0])
                 query_synonyms[t[0]] = synonyms
 
             elif self.language == 'en':
@@ -104,7 +104,7 @@ class SynonymSearch(APIView):
                         if(w.name() not in synonyms):
                             synonyms.append(w.name())
                 t = wordnet_lemmatizer.lemmatize(word)
-                print(t)
+                print(t[0])
                 query_synonyms[t[0]] = synonyms
             
         result = []
