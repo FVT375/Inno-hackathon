@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 from .utils import Squad, init_models
 
-Squad.init_models()
+init_models()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
