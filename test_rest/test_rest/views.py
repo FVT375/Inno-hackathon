@@ -12,8 +12,9 @@ from .utils import Squad, SpellingCorrector
 squad_ = Squad()
 spelling_corrector = SpellingCorrector()
 
+langid.set_languages(['en', 'ru'])
+
 def get_language(text):
-    langid.set_languages(['en', 'ru'])
     language = langid.classify(text)[0]
     return language
 
@@ -47,7 +48,7 @@ class AutomaticSpellingCorrection(APIView):
         result = {}
         words = text.split(' ')
         for word in words:
-            corr_word = spelling_corrector.do(word)
+            corr_word = spelling_corrector.do(self.language, word)
             if corr_word != word:
                 result[word] = corr_word
 
