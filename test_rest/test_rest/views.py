@@ -10,7 +10,7 @@ import json
 from .utils import Squad, SpellingCorrector
 
 squad_ = Squad()
-#spelling_corrector = SpellingCorrector()
+spelling_corrector = SpellingCorrector()
 
 def get_language(text):
     langid.set_languages(['en', 'ru'])
@@ -47,7 +47,7 @@ class AutomaticSpellingCorrection(APIView):
         result = {}
         words = text.split(' ')
         for word in words:
-            corr_word = SpellingCorrector.do(word)
+            corr_word = spelling_corrector.do(word)
             if corr_word != word:
                 result[word] = corr_word
 

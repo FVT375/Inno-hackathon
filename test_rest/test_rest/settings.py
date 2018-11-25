@@ -13,7 +13,7 @@ SECRET_KEY = 'vat0)^xc+yn5hm=n^jdd&id9gyqq&jg8=!1a21#w!ao79u*cb9'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '178.128.195.22',
+    '*',
 ]
 
 # Application definition
@@ -105,6 +105,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 

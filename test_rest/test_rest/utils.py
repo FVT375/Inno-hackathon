@@ -6,11 +6,9 @@ class Squad():
 
     def do(self, language, text, question):
         if language == 'ru':
-            #return self.model_ru([text], [question])[0][0]
-            return (language, text, question)
+            return self.model_ru([text], [question])[0][0]
         if language == 'en':
-            #return self.model_en([text], [question])[0][0]
-            return (language, text, question)
+            return self.model_en([text], [question])[0][0]
         
         #error
         return (language, text, question)
@@ -21,11 +19,7 @@ class SpellingCorrector():
 
     def do(self, language, text):
         if language == 'ru':
-            #return self.model_ru([text])[0]
-            return (language, text)
-        #if language == 'en':
-        #    return self.model_en([text])[0]
-        #    return (language, text)
+            return self.model_ru([text])[0]
         
         #error
         return (language, text)
@@ -33,8 +27,8 @@ class SpellingCorrector():
 def init_models():
     a = Squad()
     a.do('ru', 'test', 'test')
-    #a.do('en', 'test', 'test')
+    a.do('en', 'test', 'test')
 
     b = SpellingCorrector()
-    #b.do('ru', 'test')
+    b.do('ru', 'test')
     #SpellingCorrector.do('en', 'test')
