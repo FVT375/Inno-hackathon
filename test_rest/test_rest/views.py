@@ -8,6 +8,7 @@ from langid.langid import LanguageIdentifier, model
 import langid
 import json
 from .utils import Squad, SpellingCorrector
+from django.http import JsonResponse
 
 squad_ = Squad()
 spelling_corrector = SpellingCorrector()
@@ -40,7 +41,7 @@ class ContextQuestionAnswering(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return Response(result)
+        return JsonResponse(result)
 
 
 class AutomaticSpellingCorrection(APIView):
@@ -66,7 +67,7 @@ class AutomaticSpellingCorrection(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return Response(result)
+        return JsonResponse(result)
 
 
 class SynonymSearch(APIView):
@@ -137,4 +138,4 @@ class SynonymSearch(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return Response(result)
+        return JsonResponse(result)
