@@ -93,7 +93,7 @@ class SynonymSearch(APIView):
                 synonyms = []
                 for w in synset.get_words():
                     synonyms.append(w.lemma())
-                query_synonyms[word] = synonyms
+                query_synonyms[mystem.lemmatize(word)] = synonyms
 
             elif self.language == 'en':
                 synonyms = []
@@ -101,7 +101,7 @@ class SynonymSearch(APIView):
                     for w in synset.lemmas():
                         if(w.name() not in synonyms):
                             synonyms.append(w.name())
-                query_synonyms[word] = synonyms
+                query_synonyms[wordnet_lemmatizer.lemmatize(word)] = synonyms
             
         result = []
         #text_words = ''
