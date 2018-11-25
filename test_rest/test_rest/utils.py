@@ -11,7 +11,7 @@ class Squad():
             return self.model_en([text], [question])[0][0]
         
         #error
-        return (language, text, question)
+        return ('error')
 
 class SpellingCorrector():
     model_ru = build_model(configs.spelling_correction.brillmoore_kartaslov_ru)

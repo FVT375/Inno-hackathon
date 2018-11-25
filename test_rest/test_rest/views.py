@@ -23,7 +23,9 @@ class ContextQuestionAnswering(APIView):
 
     def squad(self, text, question):
         result = {}
-        result['answer'] = squad_.do(self.language, text, question)
+        t = squad_.do(self.language, text, question)
+        if t != 'error':
+            result['answer'] = t
         return json.dumps(result, ensure_ascii=False)
 
     def get_answer(self, context):
