@@ -99,34 +99,47 @@ class SynonymSearch(APIView):
                             synonyms.append(w.name())
                 query_synonyms[word] = synonyms
         
+        result = {}
         text_words = text.split(' ')
-        found = []
-        index = 0
         for word in text_words:
+            synonyms = []
             if self.language == 'ru':
                 if len (self.wikiwordnet.get_synsets(word)) > 0:
                     synset = self.wikiwordnet.get_synsets(word)[0]
                 else: break
-                synonyms = []
                 for w in synset.get_words():
                     for query_word in query_synonyms:
                         if w.lemma() in query_synonyms[query_word]:
-                            found.append(index)
-            index += 1
+                            synonyms.append(w.lemma())
+            result[word] = synonyms
+            
+        # found = []
+        # index = 0
+        # for word in text_words:
+        #     if self.language == 'ru':
+        #         if len (self.wikiwordnet.get_synsets(word)) > 0:
+        #             synset = self.wikiwordnet.get_synsets(word)[0]
+        #         else: break
+        #         synonyms = []
+        #         for w in synset.get_words():
+        #             for query_word in query_synonyms:
+        #                 if w.lemma() in query_synonyms[query_word]:
+        #                     found.append(index)
+        #     index += 1
 
-        result = {}
-        if len(found) > 1:
-            possible_words = []
-            # if found < len(text_words - 1):
-            #     possible_words.append(text_words[found+1])
-            # if found > 0:
-            #     possible_words.append(text_words[found-1])
-            for i in range(len(found) - 2):
-                if found[i] + 1 == found[i+1]:
-                    possible_words.append((text_words[found[i]], text_words[found[i+1]]))
+        # result = {}
+        # if len(found) > 1:
+        #     possible_words = []
+        #     # if found < len(text_words - 1):
+        #     #     possible_words.append(text_words[found+1])
+        #     # if found > 0:
+        #     #     possible_words.append(text_words[found-1])
+        #     for i in range(len(found) - 2):
+        #         if found[i] + 1 == found[i+1]:
+        #             possible_words.append((text_words[found[i]], text_words[found[i+1]]))
 
-            if possible_words:
-                result['result'] = possible_words
+        #     if possible_words:
+        #         result['result'] = possible_words
         return json.dumps(result)
 
     def get_answer(self, context):
