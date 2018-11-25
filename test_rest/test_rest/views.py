@@ -9,6 +9,9 @@ import langid
 import json
 from .utils import Squad, SpellingCorrector
 
+squad_ = Squad()
+#spelling_corrector = SpellingCorrector()
+
 def get_language(text):
     langid.set_languages(['en', 'ru'])
     language = langid.classify(text)[0]
@@ -19,7 +22,7 @@ class ContextQuestionAnswering(APIView):
 
     def squad(self, text, question):
         result = {}
-        result['answer'] = Squad.do(self.language, text, question)
+        result['answer'] = squad_.do(self.language, text, question)
         return json.dumps(result, ensure_ascii=False)
 
     def get_answer(self, context):

@@ -31,7 +31,10 @@ class SpellingCorrector():
         return (language, text)
 
 def init_models():
-    Squad.do('ru', 'test', 'test')
-    Squad.do('en', 'test', 'test')
-    SpellingCorrector.do('ru', 'test')
+    a = Squad()
+    a.do('ru', 'test', 'test')
+    #a.do('en', 'test', 'test')
+
+    b = SpellingCorrector()
+    #b.do('ru', 'test')
     #SpellingCorrector.do('en', 'test')
