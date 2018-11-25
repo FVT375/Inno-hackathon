@@ -9,7 +9,11 @@ import langid
 import json
 from .utils import Squad, SpellingCorrector
 from django.http import JsonResponse
+from pymystem3 import Mystem
+from nltk.stem import WordNetLemmatizer
 
+mystem = Mystem()
+wordnet_lemmatizer = WordNetLemmatizer()
 squad_ = Squad()
 spelling_corrector = SpellingCorrector()
 
@@ -98,34 +102,40 @@ class SynonymSearch(APIView):
                         if(w.name() not in synonyms):
                             synonyms.append(w.name())
                 query_synonyms[word] = synonyms
-        print("### query_synonyms")
-        print(query_synonyms)
-        print("###")
-        result = {}
-        text_words = text.split(' ')
+            
+        result = []
+        #text_words = ''
+        if self.language == 'ru':
+            text_words = mystem.lemmatize(text)
+        else:
+            text_words = wordnet_lemmatizer.lemmatize(text)
         for word in text_words:
-            synonyms = []
-            if self.language == 'ru':
-                if len (self.wikiwordnet.get_synsets(word)) > 0:
-                    synset = self.wikiwordnet.get_synsets(word)[0]
-                else: continue
-                for w in synset.get_words():
-                    for query_word in query_synonyms:
-                        if w.lemma() in query_synonyms[query_word]:
-                            synonyms.append(w.lemma())
-            print("### synonyms ru")
-            print(synonyms)
-            print("###")
-            if self.language == 'en':
-                for synset in wordnet.synsets(word):
-                    for w in synset.lemmas():
-                        for query_word in query_synonyms:
-                            if w.name() in query_synonyms[query_word] and w.name() not in synonyms:
-                                synonyms.append(w.name())
-            print("### synonyms en")
-            print(synonyms)
-            print("###")
-            result[word] = synonyms
+            for query_word in query_synonyms:
+                if word in query_synonyms[query_word]:
+                    result.append(word)
+            
+        #     synonyms = []
+        #     if self.language == 'ru':
+        #         if len (self.wikiwordnet.get_synsets(word)) > 0:
+        #             synset = self.wikiwordnet.get_synsets(word)[0]
+        #         else: continue
+        #         for w in synset.get_words():
+        #             for query_word in query_synonyms:
+        #                 if w.lemma() in query_synonyms[query_word]:
+        #                     synonyms.append(w.lemma())
+        #     print("### synonyms ru")
+        #     print(synonyms)
+        #     print("###")
+        #     if self.language == 'en':
+        #         for synset in wordnet.synsets(word):
+        #             for w in synset.lemmas():
+        #                 for query_word in query_synonyms:
+        #                     if w.name() in query_synonyms[query_word] and w.name() not in synonyms:
+        #                         synonyms.append(w.name())
+        #     print("### synonyms en")
+        #     print(synonyms)
+        #     print("###")
+        #     result[word] = synonyms
         
         # found = []
         # index = 0
