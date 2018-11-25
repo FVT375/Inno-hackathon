@@ -70,7 +70,7 @@ class AutomaticSpellingCorrection(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return JsonResponse(result)
+        return JsonResponse(result, safe=False)
 
 
 class SynonymSearch(APIView):
@@ -141,4 +141,4 @@ class SynonymSearch(APIView):
 
     def post(self, request):
         result = self.get_answer(request.body)
-        return JsonResponse(result)
+        return JsonResponse(result, safe=False)
