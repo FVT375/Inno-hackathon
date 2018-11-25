@@ -112,13 +112,13 @@ class SynonymSearch(APIView):
             index += 1
 
         result = {}
-        if found:
+        if len(found) > 1:
             possible_words = []
             # if found < len(text_words - 1):
             #     possible_words.append(text_words[found+1])
             # if found > 0:
             #     possible_words.append(text_words[found-1])
-            for i in range(len(found - 2)):
+            for i in range(len(found) - 2):
                 if found[i] + 1 == found[i+1]:
                     possible_words.append((text_words[found[i]], text_words[found[i+1]]))
 
