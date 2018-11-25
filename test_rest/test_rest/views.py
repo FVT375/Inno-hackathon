@@ -77,7 +77,9 @@ class SynonymSearch(APIView):
 
         for word in query_words:
             if self.language == 'ru':
-                synset = self.wikiwordnet.get_synsets(word)[0]
+                if len (self.wikiwordnet.get_synsets(word)) > 0:
+                    synset = self.wikiwordnet.get_synsets(word)[0]
+                else: break
                 synonyms = []
                 for w in synset.get_words():
                     synonyms.append(w.lemma())
@@ -96,7 +98,9 @@ class SynonymSearch(APIView):
         index = 0
         for word in text_words:
             if self.language == 'ru':
-                synset = self.wikiwordnet.get_synsets(word)[0]
+                if len (self.wikiwordnet.get_synsets(word)) > 0:
+                    synset = self.wikiwordnet.get_synsets(word)[0]
+                else: break
                 synonyms = []
                 for w in synset.get_words():
                     for query_word in query_synonyms:
