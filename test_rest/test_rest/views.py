@@ -119,8 +119,8 @@ class SynonymSearch(APIView):
                 if found[i] + 1 == found[i+1]:
                     possible_words.append((text_words[found[i]], text_words[found[i+1]]))
 
-        if possible_words:
-            result['result'] = possible_words
+            if possible_words:
+                result['result'] = possible_words
         return json.dumps(result, ensure_ascii=False)
 
     def get_answer(self, context):
