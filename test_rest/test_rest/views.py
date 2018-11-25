@@ -96,6 +96,7 @@ class SynonymSearch(APIView):
                 t = mystem.lemmatize(word)
                 print(t[0])
                 query_synonyms[t[0]] = synonyms
+                print(synonyms)
 
             elif self.language == 'en':
                 synonyms = []
