@@ -14,6 +14,7 @@ from nltk.stem import WordNetLemmatizer
 
 mystem = Mystem()
 wordnet_lemmatizer = WordNetLemmatizer()
+wikiwordnet = WikiWordnet()
 squad_ = Squad()
 spelling_corrector = SpellingCorrector()
 
@@ -79,7 +80,6 @@ class AutomaticSpellingCorrection(APIView):
 
 class SynonymSearch(APIView):
     language = 'ru'
-    wikiwordnet = WikiWordnet()
 
     def search(self, text, query):
         query_words = query.split(' ')
@@ -87,8 +87,8 @@ class SynonymSearch(APIView):
 
         for word in query_words:
             if self.language == 'ru':
-                if len (self.wikiwordnet.get_synsets(word)) > 0:
-                    synset = self.wikiwordnet.get_synsets(word)[0]
+                if len (wikiwordnet.get_synsets(word)) > 0:
+                    synset = wikiwordnet.get_synsets(word)[0]
                 else: break
                 synonyms = []
                 for w in synset.get_words():
