@@ -84,7 +84,7 @@ class SynonymSearch(APIView):
     def search(self, text, query):
         query_words = query.split(' ')
         query_synonyms = {}
-
+        print(query_words)
         for word in query_words:
             if self.language == 'ru':
                 if len (wikiwordnet.get_synsets(word)) > 0:
