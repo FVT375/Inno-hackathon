@@ -51,12 +51,12 @@ class AutomaticSpellingCorrection(APIView):
     language = 'ru'
 
     def correct(self, text):
-        result = {}
+        result = []
         words = text.split(' ')
         for word in words:
             corr_word = spelling_corrector.do(self.language, word)
             if corr_word != 'error' and corr_word != word:
-                result[word] = corr_word
+                result.append(corr_word)
 
         return json.dumps(result)
 
