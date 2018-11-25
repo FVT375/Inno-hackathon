@@ -105,7 +105,7 @@ class SynonymSearch(APIView):
                             synonyms.append(w.name())
                 t = wordnet_lemmatizer.lemmatize(word)
                 print(t[0])
-                query_synonyms[t[0]] = synonyms
+                query_synonyms[t] = synonyms
             
         result = []
         #text_words = ''
